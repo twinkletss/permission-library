@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-//    id ("maven-publish")
+
+    // publish library
+    id ("maven-publish")
 }
 
 android {
@@ -33,6 +35,18 @@ android {
     }
 }
 
+// publish library------
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
+//--------------
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -44,18 +58,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-
-/*
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-
-                from components.release
-                        groupId = "org.twinkle.permission_library"
-                artifactId = "permission_library"
-                version = "1.0"
-            }
-        }
-    }
-}*/
